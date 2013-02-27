@@ -12,13 +12,16 @@ all: xml-light.cma test.exe doc
 opt: xml-light.cmxa test_opt.exe
 
 installcommon: all
+	mkdir -p $(INSTALLDIR)
 	cp xml.mli xmlParser.mli dtd.mli xml.cmi xmlParser.cmi dtd.cmi $(INSTALLDIR)
 
 installbyte: all installcommon
+	mkdir -p $(INSTALLDIR)
 	cp xml-light.cma $(INSTALLDIR)
 	cp *.cmt *.cmti $(INSTALLDIR)
 
 installopt: opt installcommon
+	mkdir -p $(INSTALLDIR)
 	cp xml-light.a xml-light.cmxa xml.cmx dtd.cmx xmlParser.cmx $(INSTALLDIR)
 
 install: installbyte installopt
