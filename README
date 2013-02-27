@@ -31,15 +31,15 @@ simple samples :
 
 -- parse / print an xml string ---
 
-let x = Xml.parse_string "<a href='url'>TEXT<begin/><end/></a>" in
-Printf.printf "XML formated = \n%s" (Xml.to_string_fmt x);
+let x = Xmll.parse_string "<a href='url'>TEXT<begin/><end/></a>" in
+Printf.printf "XML formated = \n%s" (Xmll.to_string_fmt x);
 
 -- load an xml and a dtd , prove and print ---
 
-let x = Xml.parse_file "myfile.xml" in
+let x = Xmll.parse_file "myfile.xml" in
 let dtd = Dtd.parse_file "myfile.dtd" in
 let x = Dtd.prove (Dtd.check dtd) "start" x in
-print_endline (Xml.to_string x)
+print_endline (Xmll.to_string x)
 
 
 Documentation

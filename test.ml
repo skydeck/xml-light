@@ -21,13 +21,13 @@
  * MA 02110-1301 USA
  *)
 
-open Xml
+open Xmll
 open Dtd
 
 let parse data =
 	match data.[0] with
-	| '#' -> Xml.parse_file (String.sub data 1 ((String.length data)-2))
-	| _ -> Xml.parse_string data
+	| '#' -> Xmll.parse_file (String.sub data 1 ((String.length data)-2))
+	| _ -> Xmll.parse_string data
 
 ;;
 let buf = ref "" in
@@ -41,17 +41,17 @@ try
 			(try
 				let x = parse data in
 				print_endline "Parsing...";
-				print_endline (Xml.to_string_fmt x);
+				print_endline (Xmll.to_string_fmt x);
 			with
-				| Xml.Error msg ->
-					Printf.printf "Xml error : %s\n" (Xml.error msg)
+				| Xmll.Error msg ->
+					Printf.printf "Xml error : %s\n" (Xmll.error msg)
 				| Dtd.Parse_error msg ->
 					Printf.printf "Dtd parse error : %s\n" (Dtd.parse_error msg)
 				| Dtd.Check_error msg ->
 					Printf.printf "Dtd check error : %s\n" (Dtd.check_error msg)
 				| Dtd.Prove_error msg ->
 					Printf.printf "Dtd prove error : %s\n" (Dtd.prove_error msg))
-		| s -> 
+		| s ->
 			buf := !buf ^ s ^ "\n"
 	done
 with

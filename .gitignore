@@ -1,0 +1,17 @@
+*.annot
+*.cma
+*.cmi
+*.cmo
+*.cmt
+*.cmti
+*.cmx
+*.exe
+*.o
+*.out
+*.a
+*.cmxa
+doc/
+xml_lexer.ml
+xml_parser.ml
+xml_parser.mli
+

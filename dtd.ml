@@ -20,8 +20,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301 USA
  *)
-  
-open Xml
+
+open Xmll
 open Printf
 
 type parse_error_msg =
@@ -94,7 +94,7 @@ type error_pos = {
 	emax : int;
 }
 
-type parse_error = parse_error_msg * Xml.error_pos
+type parse_error = parse_error_msg * Xmll.error_pos
 
 exception Parse_error of parse_error
 exception Check_error of check_error
@@ -131,7 +131,7 @@ let pos source =
 		eline_start = lstart;
 		emin = min;
 		emax = max;
-	} : Xml.error_pos)
+	} : Xmll.error_pos)
 
 let convert = function
 	| Xml_lexer.EInvalidDTDDecl -> InvalidDTDDecl
@@ -184,7 +184,7 @@ let check dtd =
 						Hashtbl.add htodo tag from
 	in
 	let fdone tag edata =
-		try 
+		try
 			ignore(Hashtbl.find hdone tag);
 			raise (Check_error (ElementDefinedTwice tag));
 		with
@@ -280,7 +280,7 @@ let trace dtd tag =
 
 exception TmpResult of dtd_result
 
-let prove_child dtd tag = 
+let prove_child dtd tag =
 	match dtd.current with
 	| DTDEmpty -> raise (Prove_error EmptyExpected)
 	| DTDAny -> ()
@@ -323,7 +323,7 @@ let prove_child dtd tag =
 				| true -> DTDMatched
 				| false -> DTDNotMatched)
 			with
-				TmpResult r -> r)	
+				TmpResult r -> r)
 		| DTDChildren [] -> assert false (* DTD is checked ! *)
 		| DTDChildren (h :: t) ->
 			(match update h with
@@ -370,7 +370,7 @@ let prove_attrib dtd hid hidref attr aname (atype,adef) accu =
 		if Hashtbl.mem hid id then raise (Prove_error (DuplicateID id));
 		Hashtbl.add hid id ()
 	| DTDIDRef, None -> ()
-	| DTDIDRef, Some idref -> 
+	| DTDIDRef, Some idref ->
 		Hashtbl.add hidref idref ());
 	match adef, aval with
 	| DTDRequired, None -> raise (Prove_error (RequiredAttribute aname))
@@ -411,7 +411,7 @@ let rec do_prove hid hidref dtd = function
 		| DTDChild elt ->
 			let name = ref "" in
 			let rec check = function
-				| DTDTag t -> 
+				| DTDTag t ->
 					name := t;
 					false
 				| DTDPCData when !childs = [] ->
@@ -518,7 +518,7 @@ let to_string = function
 				in
 				let rec root = function
 					| DTDOptional c
-					| DTDZeroOrMore c 
+					| DTDZeroOrMore c
 					| DTDOneOrMore c ->
 						root c
 					| DTDChoice [_]

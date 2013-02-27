@@ -8,18 +8,18 @@ clean:
 
 MODULES[]=
     dtd
-    xml
+    xmll
     xmlParser
     xml_lexer
     xml_parser
 
-sources[]= dtd.ml dtd.mli xml.ml xml.mli xmlParser.ml xmlParser.mli xml_lexer.mli xml_lexer.mll xml_parser.mly
+sources[]= dtd.ml dtd.mli xmll.ml xmll.mli xmlParser.ml xmlParser.mli xml_lexer.mli xml_lexer.mll xml_parser.mly
 
 targets[]= META xml-light.cma xml-light.cmxa xml-light.a \
 	$(addsuffix .cmi, $(MODULES)) \
 	$(addsuffix .mli, $(MODULES)) \
 	$(addsuffix .cmti, $(MODULES)) \
-	$(addsuffix .cmt, $(MODULES)) 
+	$(addsuffix .cmt, $(MODULES))
 
 $(Installed xml-light): $(sources)
     ocamlfind remove xml-light

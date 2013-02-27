@@ -24,7 +24,7 @@
 
 open Printf
 open Dtd
-open Xml
+open Xmll
 
 let robust = ref false
 
@@ -35,7 +35,7 @@ type t = {
 	mutable resolve : (string -> checked);
 }
 
-type source = 
+type source =
 	| SFile of string
 	| SChannel of in_channel
 	| SString of string
@@ -47,7 +47,7 @@ type state = {
 	xparser : t;
 }
 
-exception Internal_error of Xml.error_msg
+exception Internal_error of Xmll.error_msg
 exception NoMoreData
 
 let xml_error = ref (fun _ -> assert false)
@@ -107,20 +107,20 @@ and read_elems ?tag s =
   | Xml_lexer.Eof when tag = None -> List.rev !elems
   | t ->
       match tag with
-      | None -> 
+      | None ->
           if not !robust then raise (Internal_error EOFExpected)
           else begin
             (* ignore the stacks *)
             List.rev !elems
           end
-      | Some str -> 
-          if not !robust then 
+      | Some str ->
+          if not !robust then
             raise (Internal_error (EndOfTagExpected str))
-          else begin 
+          else begin
             (* fake a close *)
             push t s; List.rev !elems
           end
-                        
+
 let read_xml s =
 	match s.xparser.prove, pop s with
 	| true, Xml_lexer.DocType (root, Xml_lexer.DTDFile file) ->

@@ -29,14 +29,14 @@
 	{li the {!Dtd.check} function can then be used to check that all DTD
 		states have been declared, that no attributes are declared twice,
 		and so on.}
-	{li the {!Dtd.prove} function can be used to check an {!Xml} data
+	{li the {!Dtd.prove} function can be used to check an {!Xmll} data
 		structure with a checked DTD. The function will return the
 		expanded Xml document or raise an exception if the DTD proving
 		fails.}
 	}
 
 	{i Note about ENTITIES:}
-	
+
 	While parsing Xml, PCDATA is always parsed and
 	the Xml entities &amp; &gt; &lt; &apos; &quot; are replaced by their
 	corresponding ASCII characters. For Xml attributes, theses can be
@@ -86,7 +86,7 @@ type checked
 (** {6 The DTD Functions} *)
 
 (** Parse the named file into a Dtd data structure. Raise
-	{!Xml.File_not_found} if an error occured while opening the file. 
+	{!Xmll.File_not_found} if an error occured while opening the file.
 	Raise {!Dtd.Parse_error} if parsing failed. *)
 val parse_file : string -> dtd
 
@@ -110,7 +110,7 @@ val check : dtd -> checked
  Raise {!Dtd.Check_error} [ElementNotDeclared] if the entry point
  is not found, raise {!Dtd.Prove_error} if the Xml document failed
  to be proved with the DTD. *)
-val prove : checked -> string -> Xml.xml -> Xml.xml
+val prove : checked -> string -> Xmll._xml -> Xmll._xml
 
 (** Print a DTD element into a string. You can easily get a DTD
  document from a DTD data structure using for example
@@ -159,7 +159,7 @@ type prove_error =
 	| DuplicateID of string
 	| MissingID of string
 
-type parse_error = parse_error_msg * Xml.error_pos
+type parse_error = parse_error_msg * Xmll.error_pos
 
 exception Parse_error of parse_error
 exception Check_error of check_error
