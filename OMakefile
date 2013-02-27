@@ -1,0 +1,28 @@
+# xml-light has a bit tricky module dependencies
+
+.PHONY: clean
+
+clean:
+    make clean
+    rm -f *.annot *.cmt *.cmti *.a
+
+MODULES[]=
+    dtd
+    xml
+    xmlParser
+    xml_lexer
+    xml_parser
+
+sources[]= dtd.ml dtd.mli xml.ml xml.mli xmlParser.ml xmlParser.mli xml_lexer.mli xml_lexer.mll xml_parser.mly
+
+targets[]= META xml-light.cma xml-light.cmxa xml-light.a \
+	$(addsuffix .cmi, $(MODULES)) \
+	$(addsuffix .mli, $(MODULES)) \
+	$(addsuffix .cmti, $(MODULES)) \
+	$(addsuffix .cmt, $(MODULES)) 
+
+$(Installed xml-light): $(sources)
+    ocamlfind remove xml-light
+    make clean all opt
+    ocamlfind install xml-light $(targets)
+    CreateInstalled(xml-light, $(targets))
